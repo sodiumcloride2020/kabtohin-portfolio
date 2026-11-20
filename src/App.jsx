@@ -100,8 +100,8 @@ export default function App() {
 
     <footer className="footer"><a className="logo" href="#top">KABTOHIN<span>®</span></a><span>© 2026 KABTOHIN. ALL RIGHTS RESERVED.</span><div className="footer-socials">
       <a href="mailto:kabtothin2020@gmail.com" aria-label="Email"><Mail size={17}/></a>
-      <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={17}/></a>
-      <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a>
+      <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="Instagram"><InstagramMark /></a>
+      <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedInMark /></a>
     </div><a href="#top">BACK TO TOP ↑</a></footer>
   </main>
 }
