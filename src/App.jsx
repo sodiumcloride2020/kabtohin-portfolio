@@ -1,4 +1,5 @@
 import { ArrowDownRight, ArrowUpRight, ArrowRight, Menu } from 'lucide-react'
+import Admin from './Admin.jsx'
 
 const projects = [
   { n: '01', type: 'PRINT DESIGN', title: 'Visual identities & print pieces', detail: 'Posters · Flyers · Brochures', tone: 'tone-one', symbol: 'P' },
@@ -15,6 +16,7 @@ function Label({ n, children }) {
   return <div className="section-label"><span>{n}</span><span>{children}</span></div>
 }
 export default function App() {
+  if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') return <Admin />
   return <main>
     <header className="header" id="top">
       <a className="logo" href="#top">KABTOHIN<span>®</span></a>
