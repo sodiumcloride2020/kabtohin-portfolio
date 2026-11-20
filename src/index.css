@@ -38,3 +38,11 @@
 @media(max-width:650px){.project-form{padding:18px}.admin-form-grid{grid-template-columns:1fr}.form-heading h2{font-size:19px}.upload-field{min-height:60px}}
 
 .mobile-menu-toggle{display:none}
+
+/* Recognizable original-style social brand marks */
+.brand-icon{width:18px;height:18px;flex:0 0 18px;display:block}
+.instagram-mark,.linkedin-mark{overflow:visible}
+.contact-socials a,.footer-socials a{display:inline-flex;align-items:center;justify-content:center}
+.footer-socials a{width:30px;height:30px}
+.contact-socials a:hover .brand-icon,.footer-socials a:hover .brand-icon{transform:translateY(-1px)}
+.brand-icon{transition:transform .2s ease}
