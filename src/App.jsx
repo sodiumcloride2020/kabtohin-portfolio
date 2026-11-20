@@ -1,12 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { supabase } from './supabaseClient'
 import { ArrowDownRight, ArrowUpRight, Menu, X, Mail } from 'lucide-react'
 import Admin from './Admin.jsx'
 
-const projects = [
-  { n: '01', type: 'PRINT DESIGN', title: 'Visual identities & print pieces', detail: 'Posters · Flyers · Brochures', tone: 'tone-one', symbol: 'P' },
-  { n: '02', type: 'MOTION DESIGN', title: 'Stories brought into motion', detail: 'Motion graphics · Short-form video', tone: 'tone-two', symbol: 'M' },
-  { n: '03', type: 'SOCIAL MEDIA', title: 'Ideas made for the feed', detail: 'Campaigns · Carousels · Social posts', tone: 'tone-three', symbol: 'S' },
-]
 const services = [
   ['01', 'Print Design', 'Posters, banners, brochures and flyers.'],
   ['02', 'Motion Design', 'Motion graphics and visual storytelling.'],
@@ -34,6 +30,26 @@ function Label({ n, children }) {
 }
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [projects, setProjects] = useState([])
+  const [projectsLoading, setProjectsLoading] = useState(true)
+
+  useEffect(() => {
+    let active = true
+    async function loadPublishedProjects() {
+      const { data, error } = await supabase
+        .from('projects')
+        .select('id, title, category, description, project_url, image_url, video_url, sort_order, created_at')
+        .eq('is_published', true)
+        .order('sort_order', { ascending: true })
+        .order('created_at', { ascending: false })
+      if (!active) return
+      if (error) console.error('Could not load portfolio projects:', error.message)
+      setProjects(data || [])
+      setProjectsLoading(false)
+    }
+    loadPublishedProjects()
+    return () => { active = false }
+  }, [])
   if (window.location.pathname.replace(/\/+$/, '') === '/admin') return <Admin />
   return <main>
     <header className="header" id="top">
@@ -69,10 +85,19 @@ export default function App() {
     <section className="work section-wrap" id="work">
       <Label n="01">SELECTED WORK</Label>
       <div className="section-heading"><h2>Ideas into<br/><em>visual form.</em></h2><p>A selection of creative directions and visual explorations. More projects coming soon.</p></div>
-      <div className="project-grid">{projects.map(p => <article className="project" key={p.n}>
-        <div className={'project-art '+p.tone}><span className="art-index">{p.n} / EXPLORE</span><span className="art-symbol">{p.symbol}</span><span className="art-caption">KABTOHIN® — CREATIVE STUDIO</span></div>
-        <div className="project-info"><div><span className="project-type">{p.type}</span><h3>{p.title}</h3><p>{p.detail}</p></div><span className="project-arrow"><ArrowUpRight size={19}/></span></div>
-      </article>)}</div>
+      <div className="project-grid">
+        {projectsLoading ? <p className="projects-status">Loading selected work…</p> : projects.length === 0 ? <p className="projects-status">New projects are coming soon.</p> : projects.map((p, index) => {
+          const content = <>
+            <div className="project-art project-media">
+              {p.video_url ? <video src={p.video_url} autoPlay muted loop playsInline preload="metadata" aria-label={p.title}/> : p.image_url ? <img src={p.image_url} alt={p.title} loading="lazy"/> : <span className="art-symbol">{(p.category || 'D').charAt(0)}</span>}
+              <span className="art-index">{String(index + 1).padStart(2, '0')} / SELECTED WORK</span>
+              <span className="art-caption">KABTOHIN® — CREATIVE STUDIO</span>
+            </div>
+            <div className="project-info"><div><span className="project-type">{(p.category || 'DESIGN').toUpperCase()}</span><h3>{p.title}</h3><p>{p.description || 'A selected creative project by KABTOHIN.'}</p></div><span className="project-arrow"><ArrowUpRight size={19}/></span></div>
+          </>
+          return p.project_url ? <a className="project" key={p.id} href={p.project_url} target="_blank" rel="noreferrer">{content}</a> : <article className="project" key={p.id}>{content}</article>
+        })}
+      </div>
     </section>
 
     <section className="about section-wrap" id="about">
