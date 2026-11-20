@@ -49,3 +49,16 @@
 
 /* Ensure the mobile navigation control is visible on small screens */
 @media(max-width:760px){.mobile-menu-toggle{display:grid!important;place-items:center;flex:0 0 42px;position:relative;z-index:40;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--ink);cursor:pointer}}
+
+/* Mobile drawer visibility fix: override the header's desktop nav hiding rule */
+@media(max-width:760px){
+  .header .mobile-menu-backdrop{display:block!important;position:fixed!important;inset:70px 0 0!important;z-index:35!important;background:rgba(25,26,22,.42);backdrop-filter:blur(3px)}
+  .header nav.mobile-menu{display:flex!important;visibility:visible!important;opacity:1!important;position:absolute!important;top:0!important;right:0!important;left:auto!important;width:min(88vw,420px)!important;min-height:calc(100dvh - 70px)!important;height:auto!important;padding:27px 6% 32px!important;background:var(--paper)!important;color:var(--ink)!important;flex-direction:column!important;align-items:stretch!important;gap:0!important;z-index:36!important;box-shadow:-12px 18px 40px rgba(0,0,0,.12)}
+  .header nav.mobile-menu>a{display:grid!important;visibility:visible!important;opacity:1!important;grid-template-columns:35px 1fr 20px!important;align-items:center!important;gap:10px!important;padding:22px 0!important;border-bottom:1px solid var(--line)!important;color:var(--ink)!important;font-size:clamp(24px,7vw,34px)!important;line-height:1.2!important;text-decoration:none!important}
+  .header nav.mobile-menu>a span{display:block!important;color:var(--muted)!important}
+  .header nav.mobile-menu>a svg{display:block!important;color:var(--muted)!important}
+  .header .mobile-menu-head{display:flex!important;visibility:visible!important;align-items:center!important;justify-content:space-between!important}
+  .header .mobile-menu-head button{display:grid!important;place-items:center!important;background:transparent!important;border:0!important;color:var(--ink)!important}
+  .header .mobile-menu>p{display:block!important;color:var(--muted)!important}
+  .header .mobile-menu-toggle{border-radius:0!important}
+}
