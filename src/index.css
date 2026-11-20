@@ -27,4 +27,12 @@
 .publish-field input{width:17px;height:17px;accent-color:#252820}
 .project-form>small{font-size:10px;color:#85877e;line-height:1.5}
 .project-form>.admin-primary{align-self:flex-start;min-width:170px}
+
+.order-field{max-width:220px}
+.media-upload-panel{border:1px dashed #b9bbaf;padding:18px;display:flex;flex-direction:column;gap:14px}
+.media-upload-title{display:flex;align-items:center;gap:9px;font-size:12px;color:#55574f}
+.media-upload-options{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.media-upload-options .upload-field{border:1px solid #d7d8cf;background:#fff}
+@media(max-width:650px){.media-upload-options{grid-template-columns:1fr}.order-field{max-width:none}}
+
 @media(max-width:650px){.project-form{padding:18px}.admin-form-grid{grid-template-columns:1fr}.form-heading h2{font-size:19px}.upload-field{min-height:60px}}
