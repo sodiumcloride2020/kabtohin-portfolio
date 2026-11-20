@@ -84,7 +84,7 @@ export default function App() {
 
     <section className="work section-wrap" id="work">
       <Label n="01">SELECTED WORK</Label>
-      <div className="section-heading"><h2>Ideas into<br/><em>visual form.</em></h2><p>A selection of creative directions and visual explorations. More projects coming soon.</p></div>
+      <div className="section-heading"><h2>Ideas into<br/><em>visual form.</em></h2><p>A selection of recent projects across print, motion and digital design.</p></div>
       <div className="project-grid">
         {projectsLoading ? <p className="projects-status">Loading selected work…</p> : projects.length === 0 ? <p className="projects-status">New projects are coming soon.</p> : projects.map((p, index) => {
           const content = <>
