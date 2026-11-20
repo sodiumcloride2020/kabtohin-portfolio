@@ -161,12 +161,15 @@ export default function Admin() {
         <div className="admin-form-grid">
           <label>Category<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}><option>Print Design</option><option>Motion Design</option><option>Social Media Design</option><option>Presentation Design</option></select></label>
           <label>Project link (optional)<input type="url" value={form.project_url} onChange={e=>setForm({...form,project_url:e.target.value})} placeholder="https://"/></label>
-          <label>Display order<input type="number" min="0" value={form.sort_order} onChange={e=>setForm({...form,sort_order:e.target.value})}/></label>
-        </div>
-        <div className="admin-form-grid">
-          <label className="upload-field"><Upload size={18}/><span>{imageFile?imageFile.name:form.image_url?'Cover image already attached':'Choose cover image'}</span><input type="file" accept="image/*" onChange={e=>setImageFile(e.target.files?.[0]||null)}/></label>
-          <label className="upload-field"><Upload size={18}/><span>{videoFile?videoFile.name:form.video_url?'Video already attached':'Choose video (max 15 sec)'}</span><input type="file" accept="video/mp4,video/webm,video/quicktime" onChange={e=>setVideoFile(e.target.files?.[0]||null)}/></label>
           <label className="publish-field"><input type="checkbox" checked={form.is_published} onChange={e=>setForm({...form,is_published:e.target.checked})}/> Publish on website</label>
+        </div>
+        <label className="order-field">Display order<input type="number" min="0" value={form.sort_order} onChange={e=>setForm({...form,sort_order:e.target.value})}/></label>
+        <div className="media-upload-panel">
+          <div className="media-upload-title"><Upload size={18}/><span>Cover media</span></div>
+          <div className="media-upload-options">
+            <label className="upload-field"><Upload size={18}/><span>{imageFile?imageFile.name:form.image_url?'Cover image already attached':'Choose cover image'}</span><input type="file" accept="image/*" onChange={e=>setImageFile(e.target.files?.[0]||null)}/></label>
+            <label className="upload-field"><Upload size={18}/><span>{videoFile?videoFile.name:form.video_url?'Video already attached':'Choose video (max 15 sec)'}</span><input type="file" accept="video/mp4,video/webm,video/quicktime" onChange={e=>setVideoFile(e.target.files?.[0]||null)}/></label>
+          </div>
         </div>
         <small>Maximum 10 video projects. Each video can be up to 15 seconds. Use compressed media for faster loading.</small>
         <button className="admin-primary" disabled={saving}>{saving?'Saving…':<><Upload size={16}/>{editingId?'Save changes':'Create project'}</>}</button>
