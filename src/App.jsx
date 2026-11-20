@@ -1,4 +1,5 @@
-import { ArrowDownRight, ArrowUpRight, ArrowRight, Menu } from 'lucide-react'
+import { useState } from 'react'
+import { ArrowDownRight, ArrowUpRight, Menu, X } from 'lucide-react'
 import Admin from './Admin.jsx'
 
 const projects = [
@@ -16,13 +17,24 @@ function Label({ n, children }) {
   return <div className="section-label"><span>{n}</span><span>{children}</span></div>
 }
 export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
   if (window.location.pathname.replace(/\/+$/, '') === '/admin') return <Admin />
   return <main>
     <header className="header" id="top">
       <a className="logo" href="#top">KABTOHIN<span>®</span></a>
       <nav><a href="#work">Work</a><a href="#about">About</a><a href="#services">Services</a><a href="#contact">Contact <ArrowUpRight size={13}/></a></nav>
       <a className="availability" href="#contact"><i/> Available for projects</a>
-      <a className="mobile-contact" href="#contact"><Menu size={21}/></a>
+      <button className="mobile-menu-toggle" type="button" aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}>{menuOpen ? <X size={21}/> : <Menu size={21}/>}</button>
+      {menuOpen && <div className="mobile-menu-backdrop" onClick={() => setMenuOpen(false)}>
+        <nav className="mobile-menu" aria-label="Mobile navigation" onClick={e => e.stopPropagation()}>
+          <div className="mobile-menu-head"><span>MENU</span><button type="button" aria-label="Close menu" onClick={() => setMenuOpen(false)}><X size={20}/></button></div>
+          <a href="#work" onClick={() => setMenuOpen(false)}><span>01</span>Work<ArrowUpRight size={18}/></a>
+          <a href="#about" onClick={() => setMenuOpen(false)}><span>02</span>About<ArrowUpRight size={18}/></a>
+          <a href="#services" onClick={() => setMenuOpen(false)}><span>03</span>Services<ArrowUpRight size={18}/></a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}><span>04</span>Contact<ArrowUpRight size={18}/></a>
+          <p>INDEPENDENT CREATIVE PRACTICE · DHAKA, BANGLADESH</p>
+        </nav>
+      </div>}
     </header>
 
     <section className="hero">
