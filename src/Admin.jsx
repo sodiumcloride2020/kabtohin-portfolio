@@ -16,6 +16,7 @@ export default function Admin() {
   const [message,setMessage] = useState('')
   const [projects,setProjects] = useState([])
   const [editingId,setEditingId] = useState(null)
+  const [showForm,setShowForm] = useState(false)
   const [form,setForm] = useState(blank)
   const [imageFile,setImageFile] = useState(null)
   const [videoFile,setVideoFile] = useState(null)
@@ -73,15 +74,19 @@ export default function Admin() {
   }
 
   function newProject() {
-    setEditingId(null); setForm(blank); setImageFile(null); setVideoFile(null); setMessage('')
-    document.getElementById('project-editor')?.scrollIntoView({behavior:'smooth'})
+    setEditingId(null); setForm(blank); setImageFile(null); setVideoFile(null); setMessage(''); setShowForm(true)
+    setTimeout(() => document.getElementById('project-editor')?.scrollIntoView({behavior:'smooth',block:'start'}), 50)
+  }
+
+  function closeForm() {
+    setShowForm(false); setEditingId(null); setForm(blank); setImageFile(null); setVideoFile(null)
   }
 
   function editProject(p) {
     setEditingId(p.id)
     setForm({title:p.title||'',category:p.category||'Print Design',description:p.description||'',project_url:p.project_url||'',sort_order:p.sort_order||0,is_published:!!p.is_published,image_url:p.image_url||'',video_url:p.video_url||''})
-    setImageFile(null); setVideoFile(null); setMessage('')
-    document.getElementById('project-editor')?.scrollIntoView({behavior:'smooth'})
+    setImageFile(null); setVideoFile(null); setMessage(''); setShowForm(true)
+    setTimeout(() => document.getElementById('project-editor')?.scrollIntoView({behavior:'smooth',block:'start'}), 50)
   }
 
   async function saveProject(e) {
@@ -107,7 +112,7 @@ export default function Admin() {
       const result=editingId ? await supabase.from('projects').update(payload).eq('id',editingId) : await supabase.from('projects').insert(payload)
       if(result.error) throw result.error
       setMessage(editingId?'Project আপডেট হয়েছে।':'নতুন Project যোগ হয়েছে।')
-      setEditingId(null); setForm(blank); setImageFile(null); setVideoFile(null)
+      setEditingId(null); setForm(blank); setImageFile(null); setVideoFile(null); setShowForm(false)
       await loadProjects()
     } catch(err) { setMessage(err.message || 'Project সংরক্ষণ করা যায়নি।') }
     finally { setSaving(false) }
@@ -149,26 +154,29 @@ export default function Admin() {
       <div className="admin-stat"><strong>{projects.length}</strong><span>Portfolio projects · {projects.filter(p=>p.is_published).length} published</span></div>
       <div className="admin-section-heading"><h2>Projects</h2><button className="admin-primary" onClick={newProject}><Plus size={16}/> Add project</button></div>
       {message && <p className="admin-notice">{message}</p>}
+      {showForm && <form className="project-form" id="project-editor" onSubmit={saveProject}>
+        <div className="form-heading"><h2>{editingId?'Edit project':'New project'}</h2><button type="button" onClick={closeForm}>Cancel</button></div>
+        <label>Project title<input required value={form.title} onChange={e=>setForm({...form,title:e.target.value})} placeholder="e.g. Botanical Campaign"/></label>
+        <label>Description<textarea rows="3" value={form.description} onChange={e=>setForm({...form,description:e.target.value})} placeholder="A short description of this project"/></label>
+        <div className="admin-form-grid">
+          <label>Category<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}><option>Print Design</option><option>Motion Design</option><option>Social Media Design</option><option>Presentation Design</option></select></label>
+          <label>Project link (optional)<input type="url" value={form.project_url} onChange={e=>setForm({...form,project_url:e.target.value})} placeholder="https://"/></label>
+          <label>Display order<input type="number" min="0" value={form.sort_order} onChange={e=>setForm({...form,sort_order:e.target.value})}/></label>
+        </div>
+        <div className="admin-form-grid">
+          <label className="upload-field"><Upload size={18}/><span>{imageFile?imageFile.name:form.image_url?'Cover image already attached':'Choose cover image'}</span><input type="file" accept="image/*" onChange={e=>setImageFile(e.target.files?.[0]||null)}/></label>
+          <label className="upload-field"><Upload size={18}/><span>{videoFile?videoFile.name:form.video_url?'Video already attached':'Choose video (max 15 sec)'}</span><input type="file" accept="video/mp4,video/webm,video/quicktime" onChange={e=>setVideoFile(e.target.files?.[0]||null)}/></label>
+          <label className="publish-field"><input type="checkbox" checked={form.is_published} onChange={e=>setForm({...form,is_published:e.target.checked})}/> Publish on website</label>
+        </div>
+        <small>Maximum 10 video projects. Each video can be up to 15 seconds. Use compressed media for faster loading.</small>
+        <button className="admin-primary" disabled={saving}>{saving?'Saving…':<><Upload size={16}/>{editingId?'Save changes':'Create project'}</>}</button>
+      </form>}
       {projects.length===0 ? <p>No projects yet. Add your first project below.</p> :
         <div className="admin-projects">{projects.map(p=><article key={p.id}>
           <div className="admin-project-main">{p.image_url?<img src={p.image_url} alt=""/>:p.video_url?<span className="admin-media-placeholder">VIDEO</span>:null}<div><strong>{p.title}</strong><span>{p.category} · {p.is_published?'Published':'Draft'}</span></div></div>
           <div className="admin-project-actions"><button onClick={()=>togglePublish(p)}>{p.is_published?<EyeOff size={16}/>:<Eye size={16}/>}<span>{p.is_published?'Draft':'Publish'}</span></button><button onClick={()=>editProject(p)}><Pencil size={16}/><span>Edit</span></button><button className="admin-delete" onClick={()=>deleteProject(p)}><Trash2 size={16}/><span>Delete</span></button></div>
         </article>)}</div>}
-      <section className="admin-editor" id="project-editor">
-        <div className="admin-section-heading"><h2>{editingId?'Edit project':'Add a project'}</h2>{editingId&&<button className="admin-quiet" onClick={newProject}><X size={15}/> Cancel edit</button>}</div>
-        <form className="admin-project-form" onSubmit={saveProject}>
-          <label>Project title<input required value={form.title} onChange={e=>setForm({...form,title:e.target.value})} placeholder="e.g. Botanical Campaign"/></label>
-          <label>Category<select value={form.category} onChange={e=>setForm({...form,category:e.target.value})}><option>Print Design</option><option>Motion Design</option><option>Social Media Design</option><option>Presentation Design</option></select></label>
-          <label>Description<textarea rows="3" value={form.description} onChange={e=>setForm({...form,description:e.target.value})} placeholder="A short description of this project"/></label>
-          <label>Project link (optional)<input type="url" value={form.project_url} onChange={e=>setForm({...form,project_url:e.target.value})} placeholder="https://"/></label>
-          <div className="admin-upload-grid">
-            <label>Cover image<input type="file" accept="image/*" onChange={e=>setImageFile(e.target.files?.[0]||null)}/>{imageFile&&<small>{imageFile.name}</small>}{!imageFile&&form.image_url&&<small>Existing image attached</small>}</label>
-            <label>Video (সর্বোচ্চ ১৫ সেকেন্ড; মোট ১০টি)<input type="file" accept="video/mp4,video/webm,video/quicktime" onChange={e=>setVideoFile(e.target.files?.[0]||null)}/>{videoFile&&<small>{videoFile.name}</small>}{!videoFile&&form.video_url&&<small>Existing video attached</small>}</label>
-          </div>
-          <div className="admin-form-row"><label>Display order<input type="number" min="0" value={form.sort_order} onChange={e=>setForm({...form,sort_order:e.target.value})}/></label><label className="admin-publish-check"><input type="checkbox" checked={form.is_published} onChange={e=>setForm({...form,is_published:e.target.checked})}/> Publish on website</label></div>
-          <button className="admin-primary admin-save" disabled={saving}>{saving?'Saving…':<><Upload size={16}/>{editingId?'Save changes':'Save project'}</>}</button>
-        </form>
-      </section>
+
     </section>
   </main>
 }
