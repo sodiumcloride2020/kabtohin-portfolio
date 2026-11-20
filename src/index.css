@@ -46,3 +46,6 @@
 .footer-socials a{width:30px;height:30px}
 .contact-socials a:hover .brand-icon,.footer-socials a:hover .brand-icon{transform:translateY(-1px)}
 .brand-icon{transition:transform .2s ease}
+
+/* Ensure the mobile navigation control is visible on small screens */
+@media(max-width:760px){.mobile-menu-toggle{display:grid!important;place-items:center;flex:0 0 42px;position:relative;z-index:40;width:42px;height:42px;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--ink);cursor:pointer}}
