@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowDownRight, ArrowUpRight, Menu, X } from 'lucide-react'
+import { ArrowDownRight, ArrowUpRight, Menu, X, Instagram, Linkedin, Mail } from 'lucide-react'
 import Admin from './Admin.jsx'
 
 const projects = [
@@ -73,10 +73,19 @@ export default function App() {
 
     <section className="contact section-wrap" id="contact">
       <Label n="04">HAVE A PROJECT IN MIND?</Label>
-      <div className="contact-content"><h2>Let's make<br/><em>something</em><br/>meaningful.</h2><a className="contact-link" href="mailto:hello@kabtohin.com">GET IN TOUCH <ArrowUpRight size={19}/></a></div>
+      <div className="contact-content"><h2>Let's make<br/><em>something</em><br/>meaningful.</h2><a className="contact-link" href="mailto:kabtothin2020@gmail.com">GET IN TOUCH <ArrowUpRight size={19}/></a></div>
+      <div className="contact-socials" aria-label="Contact and social profiles">
+        <a href="mailto:kabtothin2020@gmail.com"><Mail size={17}/><span>kabtothin2020@gmail.com</span></a>
+        <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer"><Instagram size={17}/><span>Instagram</span></a>
+        <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer"><Linkedin size={17}/><span>LinkedIn</span></a>
+      </div>
       <div className="contact-note"><span>OPEN TO CREATIVE COLLABORATIONS</span><span>BASED IN DHAKA, BANGLADESH</span></div>
     </section>
 
-    <footer className="footer"><a className="logo" href="#top">KABTOHIN<span>®</span></a><span>© 2026 KABTOHIN. ALL RIGHTS RESERVED.</span><a href="#top">BACK TO TOP ↑</a></footer>
+    <footer className="footer"><a className="logo" href="#top">KABTOHIN<span>®</span></a><span>© 2026 KABTOHIN. ALL RIGHTS RESERVED.</span><div className="footer-socials">
+      <a href="mailto:kabtothin2020@gmail.com" aria-label="Email"><Mail size={17}/></a>
+      <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="Instagram"><Instagram size={17}/></a>
+      <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><Linkedin size={17}/></a>
+    </div><a href="#top">BACK TO TOP ↑</a></footer>
   </main>
 }
