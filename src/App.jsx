@@ -16,7 +16,7 @@ function Label({ n, children }) {
   return <div className="section-label"><span>{n}</span><span>{children}</span></div>
 }
 export default function App() {
-  if (window.location.pathname === '/admin' || window.location.pathname === '/admin/') return <Admin />
+  if (window.location.pathname.replace(/\/+$/, '') === '/admin') return <Admin />
   return <main>
     <header className="header" id="top">
       <a className="logo" href="#top">KABTOHIN<span>®</span></a>
