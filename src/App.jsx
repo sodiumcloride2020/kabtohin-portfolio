@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowDownRight, ArrowUpRight, Menu, X, Instagram, Linkedin, Mail } from 'lucide-react'
+import { ArrowDownRight, ArrowUpRight, Menu, X, Mail } from 'lucide-react'
 import Admin from './Admin.jsx'
 
 const projects = [
@@ -13,6 +13,22 @@ const services = [
   ['03', 'Social Media Design', 'Campaign visuals, carousels and social content.'],
   ['04', 'Presentation Design', 'Clear, considered and engaging presentations.'],
 ]
+
+function InstagramMark() {
+  return <svg className="brand-icon instagram-mark" viewBox="0 0 24 24" role="img" aria-label="Instagram" xmlns="http://www.w3.org/2000/svg">
+    <defs><linearGradient id="ig-gradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stopColor="#FFDC80"/><stop offset="35%" stopColor="#F77737"/><stop offset="65%" stopColor="#E1306C"/><stop offset="100%" stopColor="#833AB4"/></linearGradient></defs>
+    <rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.7" fill="none" stroke="url(#ig-gradient)" strokeWidth="2"/>
+    <circle cx="12" cy="12" r="4.25" fill="none" stroke="url(#ig-gradient)" strokeWidth="2"/>
+    <circle cx="18" cy="6.2" r="1.25" fill="#E1306C"/>
+  </svg>
+}
+function LinkedInMark() {
+  return <svg className="brand-icon linkedin-mark" viewBox="0 0 24 24" role="img" aria-label="LinkedIn" xmlns="http://www.w3.org/2000/svg">
+    <rect x="1" y="1" width="22" height="22" rx="3" fill="#0A66C2"/>
+    <path fill="#fff" d="M6.1 9.1h2.7v8.7H6.1zM7.45 5.1a1.57 1.57 0 1 1-.02 3.14 1.57 1.57 0 0 1 .02-3.14M10.4 9.1H13v1.19h.04c.36-.68 1.24-1.4 2.55-1.4 2.73 0 3.24 1.8 3.24 4.14v4.77h-2.72v-4.23c0-1.01-.02-2.3-1.4-2.3-1.4 0-1.61 1.1-1.61 2.23v4.3H10.4z"/>
+  </svg>
+}
+
 function Label({ n, children }) {
   return <div className="section-label"><span>{n}</span><span>{children}</span></div>
 }
@@ -76,8 +92,8 @@ export default function App() {
       <div className="contact-content"><h2>Let's make<br/><em>something</em><br/>meaningful.</h2><a className="contact-link" href="mailto:kabtothin2020@gmail.com">GET IN TOUCH <ArrowUpRight size={19}/></a></div>
       <div className="contact-socials" aria-label="Contact and social profiles">
         <a href="mailto:kabtothin2020@gmail.com"><Mail size={17}/><span>kabtothin2020@gmail.com</span></a>
-        <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer"><Instagram size={17}/><span>Instagram</span></a>
-        <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer"><Linkedin size={17}/><span>LinkedIn</span></a>
+        <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer"><InstagramMark /><span>Instagram</span></a>
+        <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer"><LinkedInMark /><span>LinkedIn</span></a>
       </div>
       <div className="contact-note"><span>OPEN TO CREATIVE COLLABORATIONS</span><span>BASED IN DHAKA, BANGLADESH</span></div>
     </section>
