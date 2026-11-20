@@ -93,7 +93,7 @@ export default function App() {
       <div className="contact-socials" aria-label="Contact and social profiles">
         <a href="mailto:kabtothin2020@gmail.com"><Mail size={17}/><span>kabtothin2020@gmail.com</span></a>
         <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer"><InstagramMark /><span>Instagram</span></a>
-        <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer"><LinkedInMark /><span>LinkedIn</span></a>
+        <a href="https://www.linkedin.com/in/sodiumcloride" target="_blank" rel="noreferrer"><LinkedInMark /><span>LinkedIn</span></a>
       </div>
       <div className="contact-note"><span>OPEN TO CREATIVE COLLABORATIONS</span><span>BASED IN DHAKA, BANGLADESH</span></div>
     </section>
@@ -101,7 +101,7 @@ export default function App() {
     <footer className="footer"><a className="logo" href="#top">KABTOHIN<span>®</span></a><span>© 2026 KABTOHIN. ALL RIGHTS RESERVED.</span><div className="footer-socials">
       <a href="mailto:kabtothin2020@gmail.com" aria-label="Email"><Mail size={17}/></a>
       <a href="https://www.instagram.com/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="Instagram"><InstagramMark /></a>
-      <a href="https://www.linkedin.com/in/sodiumcloride2020/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedInMark /></a>
+      <a href="https://www.linkedin.com/in/sodiumcloride" target="_blank" rel="noreferrer" aria-label="LinkedIn"><LinkedInMark /></a>
     </div><a href="#top">BACK TO TOP ↑</a></footer>
   </main>
 }
